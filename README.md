@@ -1,13 +1,16 @@
 
 # Fazer previsão do Bitcoin com base no ptk `prophet`
 
-A ideia do projeto é fazer um analise dos dados de fechamento das duas principais clipto moedas
+A ideia do projeto é fazer um analise dos dados de fechamento das duas principais criptomoedas
+
+1.BTC = BitCoin
+2.ETH = Ethereum 
 
 ## Fechamento médio por mes e ano
 ![fonte:Yahoo Financias](img/plot_mes_ano.png)
 
 ## Relacão entre o BTC e ETH
-> Apliqui a `N(1,0)` e `log1p()`
+> Apliquei as transaformações a `N(1,0)` e `log1p()`
 
 ![Gráfico 1](img/BTCxETH.png)
 
