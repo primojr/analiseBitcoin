@@ -106,8 +106,3 @@ cbind(
   ) %>%
   select(ds, trend_btc, trend_eth) %>%
   knitr::kable()
-
-
-
-
-
