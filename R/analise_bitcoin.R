@@ -40,3 +40,15 @@ b = coin %>% filter(symbol == 'ETH') %>%
   ggtitle("ETH")
 
 a/b
+
+# Plot da relação
+coin %>%
+  group_by(symbol) %>%
+  mutate(close_normalizado = timetk::standardize_vec(log1p(close))) %>%
+  ungroup() %>%
+  timetk::plot_time_series(date
+                           ,close_normalizado
+                           ,symbol
+                           ,.smooth = FALSE
+                           ,.title = 'Log - normalizado')
+
