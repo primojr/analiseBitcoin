@@ -1,6 +1,7 @@
 # Pacotes
 library(tidyverse)
 library(prophet)
+library(patchwork)
 
 
 # Base de dados
@@ -15,15 +16,27 @@ glimpse(coin)
 
 
 # Identificar sasonalidade
-
-
 ## Grafico sazonalidade
-df %>%
-  mutate( mes = lubridate::month(ds,label = TRUE)
-          ,ano = lubridate::year(ds) %>% as.factor()) %>%
+# BTC
+a = coin %>% filter(symbol == 'BTC') %>%
+  mutate( mes = lubridate::month(date,label = TRUE)
+          ,ano = lubridate::year(date) %>% as.factor()) %>%
   group_by(mes, ano) %>%
-  summarise(y = mean(y)) %>%
-  ggplot(aes(x = mes, y = y, group = ano, col=ano)) +
+  summarise(close = mean(close)) %>%
+  ggplot(aes(x = mes, y = log(close), group = ano, col=ano)) +
   geom_line() +
-  geom_point()
+  geom_point() +
+  ggtitle("BTC")
 
+# ETH
+b = coin %>% filter(symbol == 'ETH') %>%
+  mutate( mes = lubridate::month(date,label = TRUE)
+          ,ano = lubridate::year(date) %>% as.factor()) %>%
+  group_by(mes, ano) %>%
+  summarise(close = mean(close)) %>%
+  ggplot(aes(x = mes, y = log(close), group = ano, col=ano)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("ETH")
+
+a/b
