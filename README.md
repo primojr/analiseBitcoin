@@ -3,7 +3,7 @@
 
 A ideia do projeto é fazer um analise dos dados de fechamento das duas principais criptomoedas
 
-1.BTC = BitCoin
+1.BTC = BitCoin  
 2.ETH = Ethereum 
 
 ## Fechamento médio por mes e ano
