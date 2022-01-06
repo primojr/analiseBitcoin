@@ -68,17 +68,13 @@ btc$ds %>% max()
 ## Predicao
 model <- prophet(btc)
 future <- make_future_dataframe(model, periods = 30)
-forecast <- predict(model, future)
+forecast_btc <- predict(model, future)
 
 ## polt
-dyplot.prophet(model, forecast)
-prophet_plot_components(model, forecast)
-plot(forecast$trend[forecast$ds <= max(btc$ds)],btc$y)
+dyplot.prophet(model, forecast_btc)
+prophet_plot_components(model, forecast_btc)
+#plot(forecast$trend[forecast$ds <= max(btc$ds)],btc$y)
 
-forecast %>%
-  filter(ds >= '2022-01-01') %>%
-  select(ds, trend) %>%
-  knitr::kable()
 
 ## Estimativa ETH
 eth = coin %>%
@@ -93,17 +89,25 @@ eth$ds %>% max()
 ## Predicao
 model <- prophet(eth)
 future <- make_future_dataframe(model, periods = 30)
-forecast <- predict(model, future)
+forecast_eth <- predict(model, future)
 
 ## polt
-dyplot.prophet(model, forecast)
-prophet_plot_components(model, forecast)
-plot(forecast$trend[forecast$ds <= max(eth$ds)],eth$y)
+dyplot.prophet(model, forecast_eth)
+prophet_plot_components(model, forecast_eth)
 
-forecast %>%
-  filter(ds >= '2022-01-01') %>%
-  select(ds, trend) %>%
+## Gerar tabelas
+cbind(
+  forecast_btc %>%
+    filter(ds >= '2022-01-01') %>%
+    select(ds = ds,trend_btc = trend)
+  ,forecast_eth %>%
+    filter(ds >= '2022-01-01') %>%
+    select(ds1 = ds,trend_eth = trend)
+  ) %>%
+  select(ds, trend_btc, trend_eth) %>%
   knitr::kable()
+
+
 
 
 
