@@ -52,3 +52,35 @@ coin %>%
                            ,.smooth = FALSE
                            ,.title = 'Log - normalizado')
 
+
+## Correlação
+
+## Estimativa BTC
+btc = coin %>%
+  filter(symbol == 'BTC') %>%
+  select(date, close) %>%
+rename(ds = date, y = close) %>%
+  arrange(ds)
+glimpse(btc)
+
+btc$ds %>% max()
+
+## Predicao
+model <- prophet(btc)
+future <- make_future_dataframe(model, periods = 30)
+forecast <- predict(model, future)
+
+## polt
+dyplot.prophet(model, forecast)
+prophet_plot_components(model, forecast)
+plot(forecast$trend[forecast$ds <= max(btc$ds)],btc$y)
+
+forecast %>%
+  filter(ds >= '2022-01-01') %>%
+  select(ds, trend) %>%
+  knitr::kable()
+
+
+
+
+
