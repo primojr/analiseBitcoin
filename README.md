@@ -1,5 +1,5 @@
 
-# Fazer previsão do Bitcoin com base no ptk `prophet`
+# Fazer previsão de criptomoedas com base no ptk `prophet` e `glm`
 
 A ideia do projeto é fazer um analise dos dados de fechamento das duas principais criptomoedas
 
