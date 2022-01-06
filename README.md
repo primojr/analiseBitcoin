@@ -20,7 +20,7 @@ ps. *No ultimo mes, vemos um descolamento entres a moedas*
 ## Estimativas para o proximos dias do BTC e ETH
 
 * Projeção com base no pacote `prophet`
-> Fazer tune dos parametros
+> ps.: Preciso fazer tune dos parametros
 
 |ds         | trend_btc| trend_eth|
 |:----------|---------:|---------:|
