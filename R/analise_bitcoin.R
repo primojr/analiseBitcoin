@@ -80,7 +80,30 @@ forecast %>%
   select(ds, trend) %>%
   knitr::kable()
 
+## Estimativa ETH
+eth = coin %>%
+  filter(symbol == 'ETH') %>%
+  select(date, close) %>%
+  rename(ds = date, y = close) %>%
+  arrange(ds)
+glimpse(eth)
 
+eth$ds %>% max()
+
+## Predicao
+model <- prophet(eth)
+future <- make_future_dataframe(model, periods = 30)
+forecast <- predict(model, future)
+
+## polt
+dyplot.prophet(model, forecast)
+prophet_plot_components(model, forecast)
+plot(forecast$trend[forecast$ds <= max(eth$ds)],eth$y)
+
+forecast %>%
+  filter(ds >= '2022-01-01') %>%
+  select(ds, trend) %>%
+  knitr::kable()
 
 
 

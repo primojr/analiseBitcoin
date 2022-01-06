@@ -53,3 +53,11 @@ ps. *No ultimo mes, vemos um descolamento entres a moedas*
 
 * Projeção com base no pacote `prophet`
 > Fazer tune dos parametros
+
+
+
+## Ajuste com regressão linear
+
+* A ideia é tentar estimar o valor médio das clipto moedas por mes, com base em outras variaveis macro economicas 
+
+![Exmplo](img/ex_mod.png)
