@@ -59,12 +59,8 @@ ps. *No ultimo mes, vemos um descolamento entres a moedas*
 |2022-02-03 |  53676.13|  4781.676|
 |2022-02-04 |  53702.92|  4791.069|
 
-![Estimativas para janeiro](img/Btc_projecao.png)
-
 
 
 ## Ajuste com regressão linear
 
 * A ideia é tentar estimar o valor médio das clipto moedas por mes, com base em outras variaveis macro economicas 
-
-![Exmplo](img/ex_mod.png)
