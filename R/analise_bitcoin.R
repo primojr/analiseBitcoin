@@ -1,13 +1,14 @@
 # Pacotes
+#install.packages(c('prophet','patchwork')
 library(tidyverse)
+
 library(prophet)
 library(patchwork)
 
-
 # Base de dados
-coin = tidyquant::tq_get(c('BTC-USD','ETH-USD')
-              ,from = '2011-12-15'
-              ,end  = '2022-01-04'
+coin = tidyquant::tq_get(c('BTC-USD','ETH-USD', 'SOL-USD')
+              ,from = '2022-01-01'
+              ,end  = '2024-08-04'
               ) %>%
   select(date, symbol, close) %>%
   mutate(symbol = str_remove_all(symbol,"-USD"))
@@ -39,7 +40,18 @@ b = coin %>% filter(symbol == 'ETH') %>%
   geom_point() +
   ggtitle("ETH")
 
-a/b
+# SOL
+c = coin %>% filter(symbol == 'SOL') %>%
+  mutate( mes = lubridate::month(date,label = TRUE)
+          ,ano = lubridate::year(date) %>% as.factor()) %>%
+  group_by(mes, ano) %>%
+  summarise(close = mean(close)) %>%
+  ggplot(aes(x = mes, y = log(close), group = ano, col=ano)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("SOL")
+
+a / b / c
 
 # Plot da relação
 coin %>%
@@ -84,6 +96,7 @@ eth = coin %>%
   arrange(ds)
 glimpse(eth)
 
+
 eth$ds %>% max()
 
 ## Predicao
@@ -106,3 +119,36 @@ cbind(
   ) %>%
   select(ds, trend_btc, trend_eth) %>%
   knitr::kable()
+
+
+
+
+# Carregando os dados da série temporal (substitua "seus_dados.csv" pelo nome do seu arquivo)
+
+
+dplyr::glimpse(btc)
+# Convertendo a coluna de data para o formato de data no R, se necessário
+dados$data <- as.Date(dados$data)
+
+# Adicionando colunas de dia da semana e mês
+btc$dia_semana <- weekdays(btc$ds)
+btc$mes <- format(btc$ds, "%b")
+
+# Agrupando os dados por dia da semana e mês e calculando a média (ou outra estatística relevante)
+library(dplyr)
+dados_resumidos <- btc %>%
+  group_by(dia_semana, mes) %>%
+  summarise(resultado_medio = mean(y)) # Você pode usar sum(), median(), sd() ou outra função, conforme necessário
+
+# Plotando o gráfico
+
+library(ggplot2)
+ggplot(dados_resumidos, aes(x = dia_semana, y = resultado_medio, fill = mes)) +
+  geom_line(stat = "identity", position = "dodge") +
+  labs(title = "Resultado por Dia da Semana e Mês",
+       x = "Dia da Semana",
+       y = "Resultado Médio",
+       fill = "Mês") +
+  theme_minimal() +
+  facet_grid(. ~ mes,)
+
